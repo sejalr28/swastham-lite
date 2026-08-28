@@ -1,0 +1,182 @@
+[
+  {
+    "chunk_id": "sh-004-0",
+    "doc_id": "sh-004",
+    "title": "Optimizing the Bedroom Environment",
+    "topic": "sleep environment",
+    "last_reviewed": "2026-01-01",
+    "chunk_index": 0,
+    "text": "The physical sleep environment influences both how quickly a person falls asleep and how many times they wake during the night, even if those brief awakenings aren't remembered in the morning. Temperature is one of the more impactful factors. A cool room, generally in the range often cited as comfortable by sleep researchers, tends to support sleep better than a warm one, because core body temperature naturally drops as part of the process of falling asleep. Darkness matters because light, especially blue-spectrum light, suppresses the release of melatonin, a hormone involved in signaling sleep onset. Blackout curtains, dimming devices before bed, and covering small standby lights on electronics can reduce this effect."
+  },
+  {
+    "chunk_id": "sh-004-1",
+    "doc_id": "sh-004",
+    "title": "Optimizing the Bedroom Environment",
+    "topic": "sleep environment",
+    "last_reviewed": "2026-01-01",
+    "chunk_index": 1,
+    "text": "Noise disruption can fragment sleep even without fully waking a person. Consistent background sound (a fan, white noise machine, or earplugs) can help mask intermittent noises like traffic or a partner's movement. Reserving the bed primarily for sleep, rather than working or scrolling on a phone while lying in it, helps the brain build a strong association between the bed and sleep rather than the bed and wakeful activity."
+  },
+  {
+    "chunk_id": "sh-006-0",
+    "doc_id": "sh-006",
+    "title": "Caffeine, Alcohol, and Sleep Quality",
+    "topic": "sleep hygiene",
+    "last_reviewed": "2026-01-01",
+    "chunk_index": 0,
+    "text": "Caffeine is a stimulant with a half-life that commonly falls in the range of about five to six hours in healthy adults, though this varies by individual metabolism. This means a substantial portion of the caffeine from an afternoon coffee can still be active in the body at bedtime. A common general guideline is to avoid caffeine intake in the 6 to 8 hours before the intended bedtime, though sensitive individuals may need a longer window."
+  },
+  {
+    "chunk_id": "sh-006-1",
+    "doc_id": "sh-006",
+    "title": "Caffeine, Alcohol, and Sleep Quality",
+    "topic": "sleep hygiene",
+    "last_reviewed": "2026-01-01",
+    "chunk_index": 1,
+    "text": "Alcohol has a more complex relationship with sleep. It can shorten the time it takes to fall asleep because of its sedative effect, but it tends to disrupt sleep architecture later in the night, reducing REM sleep and increasing awakenings as the body metabolizes it. As a result, sleep after alcohol consumption is often lighter and less restorative even if total sleep time seems normal. Nicotine is also a stimulant and has been associated with lighter, more fragmented sleep and reduced total sleep time in regular users. This information describes general population-level patterns. It is not guidance on substance use, dependence, or cessation, and it is not a recommendation regarding alcohol, caffeine, or nicotine consumption for any specific individual."
+  },
+  {
+    "chunk_id": "sh-003-0",
+    "doc_id": "sh-003",
+    "title": "Keeping a Consistent Sleep Schedule",
+    "topic": "sleep hygiene",
+    "last_reviewed": "2026-01-01",
+    "chunk_index": 0,
+    "text": "Going to bed and waking up at roughly the same time every day, including weekends, is one of the most consistently recommended sleep hygiene practices. This regularity helps stabilize the body's internal circadian clock, which governs the timing of sleepiness and alertness across a 24-hour period. Large swings in wake time between weekdays and weekends, sometimes called \"social jet lag,\" can make it harder to fall asleep at the intended time and can contribute to grogginess and reduced alertness during the week. Morning light exposure shortly after waking helps reinforce a consistent circadian rhythm. Natural daylight is generally more effective for this purpose than indoor lighting, which is typically far dimmer than outdoor light even on an overcast day."
+  },
+  {
+    "chunk_id": "sh-003-1",
+    "doc_id": "sh-003",
+    "title": "Keeping a Consistent Sleep Schedule",
+    "topic": "sleep hygiene",
+    "last_reviewed": "2026-01-01",
+    "chunk_index": 1,
+    "text": "For people whose schedules genuinely vary, such as shift workers, maintaining consistency around the sleep period itself (rather than the clock time) and protecting a dark, quiet sleep window are more realistic goals than fixing a single bedtime."
+  },
+  {
+    "chunk_id": "sh-007-0",
+    "doc_id": "sh-007",
+    "title": "Physical Activity and Sleep",
+    "topic": "sleep hygiene",
+    "last_reviewed": "2026-01-01",
+    "chunk_index": 0,
+    "text": "Regular physical activity is generally associated with better sleep quality, including falling asleep faster and spending more time in deep sleep, compared to a sedentary lifestyle. Timing can matter for some individuals. Vigorous exercise very close to bedtime raises core body temperature and heart rate, which can delay sleep onset for people who are sensitive to this effect, since falling asleep is associated with a drop in core temperature. For those individuals, finishing intense workouts at least a few hours before bed is a common suggestion."
+  },
+  {
+    "chunk_id": "sh-007-1",
+    "doc_id": "sh-007",
+    "title": "Physical Activity and Sleep",
+    "topic": "sleep hygiene",
+    "last_reviewed": "2026-01-01",
+    "chunk_index": 1,
+    "text": "That said, the relationship is individual: many people report no negative effect from evening exercise, and for some, a light evening walk or gentle stretching can actually support relaxation before bed. Morning or afternoon exercise, combined with outdoor light exposure, may offer an additional circadian benefit by reinforcing daytime alertness cues. Consistency of activity over time appears to matter more for sleep benefits than the exact time of day it is performed."
+  },
+  {
+    "chunk_id": "sh-008-0",
+    "doc_id": "sh-008",
+    "title": "Napping: When It Helps and When It Hurts",
+    "topic": "sleep hygiene",
+    "last_reviewed": "2026-01-01",
+    "chunk_index": 0,
+    "text": "Short naps can improve alertness, mood, and performance, particularly for people who are sleep-deprived or working irregular hours. A commonly cited guideline is to keep naps to around 20 to 30 minutes, which helps avoid entering deep sleep stages that can cause grogginess (sleep inertia) upon waking. Nap timing also matters. Naps taken in the early-to-mid afternoon are less likely to interfere with nighttime sleep than naps taken in the late afternoon or evening, since the latter reduce accumulated \"sleep pressure\" close to the intended bedtime."
+  },
+  {
+    "chunk_id": "sh-008-1",
+    "doc_id": "sh-008",
+    "title": "Napping: When It Helps and When It Hurts",
+    "topic": "sleep hygiene",
+    "last_reviewed": "2026-01-01",
+    "chunk_index": 1,
+    "text": "For people with ongoing difficulty falling asleep at night or diagnosed insomnia, sleep specialists often recommend reducing or eliminating naps, since naps can further reduce nighttime sleep drive and worsen the cycle of poor nighttime sleep. As with other sleep hygiene topics, individual response varies, and these are general patterns rather than fixed rules for every person."
+  },
+  {
+    "chunk_id": "sh-005-0",
+    "doc_id": "sh-005",
+    "title": "Screens, Blue Light, and Evening Habits",
+    "topic": "sleep hygiene",
+    "last_reviewed": "2026-01-01",
+    "chunk_index": 0,
+    "text": "Electronic screens emit light that includes a significant blue-wavelength component, which can suppress melatonin release more than warmer, dimmer light sources. This is one reason screen use close to bedtime is commonly discouraged. However, research suggests the effect of screens on sleep is not purely about the light itself. The content being consumed matters too: stimulating, emotionally engaging, or work-related content can delay sleep onset by keeping the mind alert, independent of light exposure. Practical approaches include setting a \"screen curfew\" 30 to 60 minutes before the intended bedtime, using device night-mode or warm-light settings in the evening, and keeping phones outside the bedroom or on do-not-disturb to avoid notification-driven awakenings."
+  },
+  {
+    "chunk_id": "sh-005-1",
+    "doc_id": "sh-005",
+    "title": "Screens, Blue Light, and Evening Habits",
+    "topic": "sleep hygiene",
+    "last_reviewed": "2026-01-01",
+    "chunk_index": 1,
+    "text": "These are general behavioral recommendations rather than fixed rules. Some individuals are more sensitive to evening light and screen stimulation than others, and adjusting the specific timing to what works for a given person's routine is reasonable."
+  },
+  {
+    "chunk_id": "sh-002-0",
+    "doc_id": "sh-002",
+    "title": "Sleep Cycles and Stages",
+    "topic": "sleep physiology",
+    "last_reviewed": "2026-01-01",
+    "chunk_index": 0,
+    "text": "A typical night of sleep is organized into repeating cycles, each lasting roughly 90 minutes. Within each cycle, the body moves through several stages: light non-REM sleep, deep non-REM sleep, and REM (rapid eye movement) sleep. Most adults go through four to six such cycles per night. Deep non-REM sleep, concentrated in the earlier cycles of the night, is associated with physical restoration, tissue repair, and immune function. REM sleep, which becomes more prominent in later cycles closer to waking, is associated with memory consolidation, emotional processing, and dreaming."
+  },
+  {
+    "chunk_id": "sh-002-1",
+    "doc_id": "sh-002",
+    "title": "Sleep Cycles and Stages",
+    "topic": "sleep physiology",
+    "last_reviewed": "2026-01-01",
+    "chunk_index": 1,
+    "text": "Because deep sleep is concentrated earlier in the night, cutting sleep short by staying up late tends to reduce deep sleep more than REM sleep. Conversely, waking up too early can disproportionately cut into REM-heavy later cycles. Understanding sleep architecture explains why both total sleep duration and sleep timing matter, not just the number of hours logged. A fragmented night with frequent awakenings can reduce time spent in restorative deep sleep even if total time in bed appears adequate."
+  },
+  {
+    "chunk_id": "sh-009-0",
+    "doc_id": "sh-009",
+    "title": "Stress, Racing Thoughts, and Sleep",
+    "topic": "sleep and mental wellbeing",
+    "last_reviewed": "2026-01-01",
+    "chunk_index": 0,
+    "text": "Stress and an overactive mind at bedtime are among the most commonly reported barriers to falling asleep. Physiologically, stress activates the sympathetic nervous system, raising heart rate and alertness, which works against the relaxed state needed for sleep onset. Several general wind-down strategies are commonly suggested to reduce pre-sleep stress: a consistent, calming pre-bed routine (such as reading, light stretching, or a warm shower); writing down tomorrow's to-do list or worries earlier in the evening so they don't surface at bedtime; and simple breathing exercises that slow respiration and activate the parasympathetic nervous system."
+  },
+  {
+    "chunk_id": "sh-009-1",
+    "doc_id": "sh-009",
+    "title": "Stress, Racing Thoughts, and Sleep",
+    "topic": "sleep and mental wellbeing",
+    "last_reviewed": "2026-01-01",
+    "chunk_index": 1,
+    "text": "Getting out of bed if unable to sleep after roughly 20 minutes, and returning only when sleepy, is a widely recommended practice. It helps prevent the bed from becoming associated with frustration and wakefulness rather than rest. Occasional stress-related sleep disruption is common and usually not a cause for concern on its own. However, persistent sleep difficulty accompanied by ongoing low mood, anxiety, or an inability to function during the day is a signal to speak with a healthcare professional rather than relying solely on self-help strategies."
+  },
+  {
+    "chunk_id": "sh-001-0",
+    "doc_id": "sh-001",
+    "title": "What Is Sleep Hygiene?",
+    "topic": "sleep hygiene",
+    "last_reviewed": "2026-01-01",
+    "chunk_index": 0,
+    "text": "Sleep hygiene refers to a set of daily habits and environmental practices that support consistent, good-quality sleep. It is not a single rule but a collection of behaviors covering when you sleep, where you sleep, and what you do in the hours leading up to sleep. The core idea is that sleep is influenced by more than just how tired you feel. Light exposure, meal timing, physical activity, stress levels, and the physical sleep environment all interact to affect how easily you fall asleep and how restorative that sleep is."
+  },
+  {
+    "chunk_id": "sh-001-1",
+    "doc_id": "sh-001",
+    "title": "What Is Sleep Hygiene?",
+    "topic": "sleep hygiene",
+    "last_reviewed": "2026-01-01",
+    "chunk_index": 1,
+    "text": "Good sleep hygiene practices are generally low-risk and can be adopted gradually. They are commonly recommended as a first step before considering other interventions, because they address common, modifiable contributors to poor sleep such as irregular schedules, excessive evening screen use, and stimulant intake late in the day. Sleep hygiene guidance is general wellness information. It is not a substitute for a medical evaluation, and it does not replace the input of a licensed healthcare provider, especially for anyone experiencing persistent sleep difficulty, suspected sleep apnea, or symptoms of a sleep disorder."
+  },
+  {
+    "chunk_id": "sh-010-0",
+    "doc_id": "sh-010",
+    "title": "When Sleep Trouble Warrants Professional Care",
+    "topic": "safety and escalation",
+    "last_reviewed": "2026-01-01",
+    "chunk_index": 0,
+    "text": "General sleep hygiene guidance is intended for common, mild sleep difficulty. It is not a treatment for diagnosed sleep disorders and is not appropriate as the sole response to certain warning signs. A healthcare provider should be consulted if a person experiences: loud, disruptive snoring combined with gasping or choking during sleep (possible signs of sleep apnea); ongoing insomnia lasting more than a few weeks despite consistent sleep hygiene efforts; excessive daytime sleepiness that interferes with driving, work, or daily functioning; sleep difficulty accompanied by symptoms of depression or anxiety; or any sudden, unexplained change in sleep patterns."
+  },
+  {
+    "chunk_id": "sh-010-1",
+    "doc_id": "sh-010",
+    "title": "When Sleep Trouble Warrants Professional Care",
+    "topic": "safety and escalation",
+    "last_reviewed": "2026-01-01",
+    "chunk_index": 1,
+    "text": "This platform does not diagnose medical or sleep disorders, does not recommend medications or supplements, and does not replace a consultation with a licensed physician or sleep specialist. Its role is limited to general, educational wellness information. If a person describes thoughts of self-harm, a mental health crisis, or a medical emergency, the appropriate response is to direct them toward emergency services or crisis support resources immediately, rather than continuing with general sleep advice."
+  }
+]
