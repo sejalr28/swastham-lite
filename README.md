@@ -181,6 +181,13 @@ test I wrote in response, then locked in as a permanent regression case in
 
 ## Known limitations
 
+- **All generated app text uses plain ASCII, no em dashes.** Found via live
+  testing: PowerShell's default console codepage doesn't render UTF-8 em
+  dashes correctly (showed up as mojibake). Rather than rely on every
+  client terminal being UTF-8 configured, all strings returned by the API
+  (tool responses, RAG answers, clarify prompts) were switched to plain
+  ASCII hyphens. (This README file itself still uses real em dashes for
+  readability, since it's read in a markdown viewer, not a console.)
 - The router is regex/keyword-based, not an LLM planner — it will miss
   phrasings not covered by the pattern list. A production version could
   route via real LLM function-calling (e.g. Claude's tool-use API) behind
@@ -239,3 +246,48 @@ python tests/test_agent.py
 - Regression-test prompt/retrieval changes against the eval set
 - Write up the eval results as the project's headline artifact
 - Simple frontend chat UI (Streamlit or minimal HTML) hitting the FastAPI backend
+
+---
+
+# Week 3: Evaluation Harness
+
+Full writeup lives in **[`eval/README.md`](eval/README.md)** — dataset design,
+scoring methodology, and (most importantly) the actual bugs the eval found and
+how they were fixed. That file is the project's headline artifact; this
+section is just a summary.
+
+## Headline result
+
+**92.7% (38/41)** on a 41-case, hand-written eval set spanning correctness,
+completeness, refusal, crisis safety, diagnosis-seeking safety, tool routing,
+and cross-paraphrase consistency — fully offline, no API key required.
+
+The first run scored 87.8%. Debugging the 5 failures found two real bugs in
+the retrieval embedder (not just eval-set quirks) — one of which was
+introduced by the *fix* for the first one, caught immediately by re-running
+the eval. Both are fixed and permanently regression-tested. Full story,
+including exact root causes and score data, in `eval/README.md`.
+
+## What's new
+
+| File | Responsibility |
+|---|---|
+| `eval/eval_set.json` | 41 hand-written test cases across 7 categories |
+| `eval/run_eval.py` | Rule-based scoring harness; prints a report and saves timestamped JSON results |
+| `eval/README.md` | Full methodology + findings writeup — **read this one** |
+| `src/embeddings.py` | Updated: added lightweight stemming + domain-filler stopwords (see eval findings) |
+| `src/retriever.py` | Retuned similarity threshold (0.09 → 0.095) based on eval score data |
+
+## How to run
+
+```bash
+cd eval
+python run_eval.py
+```
+
+## What's next (week 4 / polish)
+
+- Swap in `SentenceTransformerEmbedder` to close the remaining semantic-gap
+  failures at the root (documented in `eval/README.md`)
+- Simple frontend chat UI (Streamlit or minimal HTML) hitting the FastAPI backend
+- LLM-as-judge scoring once a real generation backend replaces the extractive stub

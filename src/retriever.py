@@ -18,14 +18,13 @@ from vector_store import SimpleVectorStore
 HERE = os.path.dirname(os.path.abspath(__file__))
 INDEX_DIR = os.path.join(HERE, "..", "data", "index")
 
-MIN_SIMILARITY = 0.09  # tuned empirically for the TF-IDF backend; see eval/
-# NOTE: TF-IDF has no real semantic understanding, so this threshold is a
-# blunt instrument -- it can still be tricked by generic words ("good",
-# "recommend") coincidentally overlapping the corpus vocabulary. This was
-# caught by tests/test_retrieval.py::test_off_topic_returns_nothing during
-# development (see README "Known limitations"). Swapping in
-# SentenceTransformerEmbedder (embeddings.py) would fix this at the root
-# by using real semantic similarity instead of word overlap.
+MIN_SIMILARITY = 0.095  # tuned via eval/run_eval.py; see eval/README.md "Findings"
+# for the full history of how this number was derived (started at 0.08,
+# revised to 0.09, then to 0.095 after adding stemming + domain-filler
+# stopwords in embeddings.py closed most of the gap between the lowest
+# legitimate correctness score (0.099) and the highest off-topic false
+# positive (0.089). Re-run `python eval/run_eval.py` after any change to
+# the knowledge base or embedder to confirm this margin still holds.
 
 
 class Retriever:
