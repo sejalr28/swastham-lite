@@ -1,22 +1,4 @@
-"""
-agent.py
---------
-The agent layer that sits in front of rag.py. Its job: for each incoming
-message, decide whether to:
-  1. call a deterministic tool (bedtime calc, caffeine cutoff, wind-down routine)
-  2. fall back to RAG retrieval + generation for general questions
-  3. ask a clarifying question when a tool clearly applies but required
-     parameters (e.g. a time) are missing from the message
 
-Two-stage routing, both intentionally simple and inspectable for week 2:
-  - Stage 1: keyword-based intent match against TOOL_REGISTRY (see tools.py)
-  - Stage 2: regex-based slot extraction (times in HH:MM or "10pm" style)
-
-This is NOT an LLM-driven planner yet -- it's a transparent, testable
-router. The interface (`Agent.handle(message) -> AgentResponse`) is
-designed so a future version could swap this logic for real LLM
-function-calling (e.g. Claude's tool-use API) without changing callers.
-"""
 
 from __future__ import annotations
 import re
@@ -116,7 +98,7 @@ class Agent:
         self.rag = RAGPipeline()
 
     def handle(self, message: str) -> AgentResponse:
-        # Crisis check first, always -- bypasses tool routing and RAG entirely.
+       
         safety_result = safety.check(message)
         if safety_result.is_crisis:
             return AgentResponse(answer=safety_result.fixed_response, mode="crisis")
@@ -152,7 +134,7 @@ class Agent:
             result = TOOL_REGISTRY[tool_name]["fn"](**{kwarg: slot_value})
             return self._tool_response(tool_name, result)
 
-        # No tool matched strongly enough -> fall back to RAG.
+        
         rag_response: RAGResponse = self.rag.answer(message)
         return AgentResponse(
             answer=rag_response.answer,
@@ -170,7 +152,7 @@ class Agent:
                 tool_result=result,
             )
 
-        # Turn structured tool output into a short natural-language line.
+
         if tool_name == "bedtime_calculator":
             text = (f"To wake up at {result['wake_time']}, aim to be asleep by around "
                     f"{result['recommended_bedtime']} ({result['total_sleep_hours']}h across "

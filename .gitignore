@@ -13,10 +13,10 @@ data/index/*.json
 data/index/*.pkl
 data/app.db
 
-# Generated eval reports (rebuildable via `python eval/run_eval.py`)
+
 eval/results/*.json
 
-# Environment / secrets
+# Environment
 .env
 *.env
 
@@ -24,6 +24,6 @@ eval/results/*.json
 .DS_Store
 Thumbs.db
 
-# Editor
+
 .vscode/
 .idea/

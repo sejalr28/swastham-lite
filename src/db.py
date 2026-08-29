@@ -1,15 +1,4 @@
-"""
-db.py
------
-Minimal SQLite-backed session/history storage. Kept intentionally simple
-(no ORM) since the scope here is "store a conversation and retrieve it,"
-not a general data layer.
 
-Schema:
-  sessions(session_id TEXT PRIMARY KEY, created_at TEXT)
-  messages(id INTEGER PRIMARY KEY, session_id TEXT, role TEXT, content TEXT,
-           mode TEXT, created_at TEXT)
-"""
 
 from __future__ import annotations
 import sqlite3

@@ -1,18 +1,131 @@
-# Swastham-lite — Week 1: RAG Foundations
+# Swastham-lite
+
+A grounded, safety-aware AI assistant for **sleep hygiene** — RAG retrieval,
+agent tools, a FastAPI backend, and a chat UI, built with an evaluation
+harness to actually measure whether the system is correct and safe rather
+than just demoing it.
+
+Built as a self-directed project while preparing for an AI/ML internship
+application, to practice the parts of the stack that matter most in
+practice: grounding answers in real sources, handling ambiguity and safety
+edge cases deliberately, and *proving* the system works with tests and a
+measured eval rather than eyeballing a demo.
+
+**Result: 92.7% pass rate** on a 41-case evaluation set covering
+correctness, safety, refusal, tool routing, and cross-paraphrase
+consistency — fully offline, no API key required to reproduce. Full
+methodology and findings: [`eval/README.md`](eval/README.md).
+
+![Swastham-lite chat UI](docs/frontend-screenshot.png)
+
+### Live routing demo
+
+Three real conversations, showing the agent choose a different path for
+each message — grounded retrieval, a clarifying question, and an honest
+decline when nothing relevant is in the knowledge base.
+
+| Grounded answer, with sources | Clarify (missing info) | Refusal (off-topic) |
+|---|---|---|
+| ![Grounded RAG answer citing sh-006](docs/demo-1-grounded-answer.png) | ![Agent asking for a wake-up time before it can compute a bedtime](docs/demo-2-clarify.png) | ![Agent declining to answer an off-topic question](docs/demo-3-refusal.png) |
+| "How does caffeine affect my sleep?" retrieves and cites `sh-006`. | "What time should I go to bed?" is missing the wake-up time the `bedtime_calculator` tool needs, so the agent asks instead of guessing. | "What's the capital of France?" retrieves nothing above the similarity threshold, so the assistant says so instead of forcing an answer. |
+
+The third screenshot is also what caught a real bug: the frontend
+originally labeled this refusal with a **"Grounded answer"** badge, since
+a decline is technically still `mode="rag"` in the API (just with an empty
+sources list) — there's no distinct "refusal" mode in the backend. Fixed
+by having the frontend treat `mode="rag"` + zero sources as its own
+"Couldn't help with that" badge, so a real grounded answer and a decline
+are never visually indistinguishable.
+
+## What it does
+
+- Answers sleep-hygiene questions **grounded in a 10-document knowledge
+  base**, citing sources, and declining to answer when nothing relevant
+  is retrieved
+- Routes to **deterministic tools** (bedtime calculator, caffeine cutoff
+  calculator, wind-down routine builder) when a message calls for a
+  calculation rather than general information
+- Runs a **safety layer before anything else** — crisis language gets a
+  fixed, calm redirect to real support resources, bypassing retrieval and
+  generation entirely
+- Ships as a **FastAPI backend** with session-based conversation history,
+  and a **browser-based chat UI**
+
+## Architecture
+
+```
+data/knowledge/*.md → chunking → embeddings (TF-IDF, pluggable) → vector store
+                                                                        │
+ message → safety check → agent router → tool  ─┐                     │
+                                        └→ RAG ──┴────── retrieval ────┘
+                                                    │
+                                              generation + citations
+```
+
+Full component breakdown, design decisions, and known limitations are in
+the "Build Log" section below, written up week by week as the project was
+actually built (including real bugs found and fixed along the way).
+
+## Quickstart
+
+```bash
+pip install -r requirements.txt
+cd src && python ingest.py          # build the retrieval index
+
+uvicorn app:app --reload --port 8000   # start the API (from src/)
+```
+
+In another terminal:
+```bash
+cd frontend && python -m http.server 5500
+```
+
+Open **http://localhost:5500** for the chat UI, or **http://localhost:8000/docs**
+for the interactive API docs.
+
+Run the tests and eval:
+```bash
+python tests/test_safety.py
+python tests/test_retrieval.py
+python tests/test_agent.py
+cd eval && python run_eval.py
+```
+
+## Project layout
+
+```
+swastham-lite/
+├── data/knowledge/   knowledge base (10 docs)
+├── src/              chunking, retrieval, safety, agent, tools, FastAPI app
+├── tests/            unit/regression tests
+├── eval/             evaluation harness + findings writeup
+└── frontend/         browser chat UI
+```
+
+---
+
+# Build Log
+
+The sections below are the week-by-week record of how this was actually
+built, including the real bugs found during development and how they were
+fixed — kept as written at the time rather than cleaned up after the fact,
+since that process is as much a part of the project as the final code.
+
+## Week 1: RAG Foundations
 
 A grounded, safety-aware Q&A assistant for **sleep hygiene** (chosen as the narrow
 domain for this project). This week builds the full retrieval pipeline: knowledge
 base → chunking → embeddings → vector search → grounded generation → basic
 safety layer — plus automated tests for both retrieval quality and safety behavior.
 
-## Why sleep hygiene as the domain
+### Why sleep hygiene as the domain
 
 Narrow enough to build a real, dense knowledge base in a week (10 docs, 20 chunks)
 while still having genuine nuance (contradicting-sounding advice like "exercise
 helps sleep" vs. "not too close to bedtime") that's useful for testing whether the
 system stays grounded instead of overgeneralizing.
 
-## Architecture
+### Architecture
 
 ```
 data/knowledge/*.md   →  chunking.py    →  embeddings.py   →  vector_store.py
@@ -38,7 +151,7 @@ query → safety.py (crisis/diagnosis check) → retriever.py (top-k + threshold
 | `tests/test_safety.py` | Regression tests for crisis/diagnosis detection |
 | `tests/test_retrieval.py` | Retrieval-quality tests (relevant doc in top-3, off-topic returns nothing) |
 
-## Key design decisions
+### Key design decisions
 
 - **Paragraph-aware chunking, not fixed-character windows.** Keeps chunks
   topically coherent, which matters more for grounding quality than raw chunk
@@ -59,7 +172,7 @@ query → safety.py (crisis/diagnosis check) → retriever.py (top-k + threshold
   queries never reach the knowledge base or LLM at all — they get a fixed,
   calm redirect response immediately.
 
-## Known limitations (honest, for the eval writeup in week 3)
+### Known limitations (honest, for the eval writeup in week 3)
 
 - **TF-IDF has no real semantic understanding** — it matches on word overlap,
   not meaning. During testing this caused a false-positive retrieval: "Recommend
@@ -79,7 +192,7 @@ query → safety.py (crisis/diagnosis check) → retriever.py (top-k + threshold
   proving retrieval + grounding + safety work correctly, but the real
   demo/eval should run with `LLM_BACKEND=claude` for actual answer quality.
 
-## How to run
+### How to run
 
 ```bash
 cd src
@@ -99,7 +212,7 @@ export LLM_BACKEND=claude
 export ANTHROPIC_API_KEY=...
 ```
 
-## What's next (week 2)
+### What's next (week 2)
 
 - Wrap `rag.py` in a FastAPI backend with a `/chat` endpoint and session history
 - Add 2–3 agent tools (e.g. a bedtime calculator, a wind-down routine builder)
@@ -107,12 +220,12 @@ export ANTHROPIC_API_KEY=...
 
 ---
 
-# Week 2: Agent, Tools, and Backend API
+## Week 2: Agent, Tools, and Backend API
 
 Adds an agent layer in front of RAG that can call deterministic tools, plus
 a FastAPI backend with session-based conversation history.
 
-## What's new
+### What's new
 
 | File | Responsibility |
 |---|---|
@@ -123,7 +236,7 @@ a FastAPI backend with session-based conversation history.
 | `tests/test_agent.py` | Regression tests for tool routing (9 cases, including 3 real bugs found during dev) |
 | `requirements.txt` | Pinned deps for local setup |
 
-## Tools
+### Tools
 
 All three tools are **calculators/organizers, not medical decision-makers** —
 consistent with the safety posture from week 1. None diagnose anything or
@@ -136,7 +249,7 @@ recommend medication/dosages.
 - **`build_winddown_routine`** — given a bedtime, builds a scheduled wind-down
   routine (grounded in `sh-009`)
 
-## Agent routing design
+### Agent routing design
 
 Two-stage, deliberately simple and inspectable (not an LLM planner yet):
 
@@ -153,7 +266,7 @@ Two-stage, deliberately simple and inspectable (not an LLM planner yet):
 Crisis detection (from week 1's `safety.py`) runs before any of this, on
 every message, unconditionally.
 
-## Bugs found and fixed during dev testing
+### Bugs found and fixed during dev testing
 
 Same practice as week 1 — every bug below was caught by hand-testing or a
 test I wrote in response, then locked in as a permanent regression case in
@@ -179,7 +292,7 @@ test I wrote in response, then locked in as a permanent regression case in
    in the message and asking for clarification whenever more than one is
    found, plus adding named-time support (`midnight`/`noon`/`midday`).
 
-## Known limitations
+### Known limitations
 
 - **All generated app text uses plain ASCII, no em dashes.** Found via live
   testing: PowerShell's default console codepage doesn't render UTF-8 em
@@ -203,7 +316,7 @@ test I wrote in response, then locked in as a permanent regression case in
   request/response validation, CORS) needs to be smoke-tested on your
   machine. Let me know if anything doesn't match once you run it.
 
-## How to run
+### How to run
 
 ```bash
 pip install -r requirements.txt
@@ -239,7 +352,7 @@ python tests/test_retrieval.py
 python tests/test_agent.py
 ```
 
-## What's next (week 3)
+### What's next (week 3)
 
 - Build the evaluation harness: a larger Q&A test set (30–50 pairs) covering
   correctness, safety, and consistency, with automated scoring
@@ -249,14 +362,14 @@ python tests/test_agent.py
 
 ---
 
-# Week 3: Evaluation Harness
+## Week 3: Evaluation Harness
 
 Full writeup lives in **[`eval/README.md`](eval/README.md)** — dataset design,
 scoring methodology, and (most importantly) the actual bugs the eval found and
 how they were fixed. That file is the project's headline artifact; this
 section is just a summary.
 
-## Headline result
+### Headline result
 
 **92.7% (38/41)** on a 41-case, hand-written eval set spanning correctness,
 completeness, refusal, crisis safety, diagnosis-seeking safety, tool routing,
@@ -268,7 +381,7 @@ introduced by the *fix* for the first one, caught immediately by re-running
 the eval. Both are fixed and permanently regression-tested. Full story,
 including exact root causes and score data, in `eval/README.md`.
 
-## What's new
+### What's new
 
 | File | Responsibility |
 |---|---|
@@ -278,16 +391,24 @@ including exact root causes and score data, in `eval/README.md`.
 | `src/embeddings.py` | Updated: added lightweight stemming + domain-filler stopwords (see eval findings) |
 | `src/retriever.py` | Retuned similarity threshold (0.09 → 0.095) based on eval score data |
 
-## How to run
+### How to run
 
 ```bash
 cd eval
 python run_eval.py
 ```
 
-## What's next (week 4 / polish)
+### What's next (week 4 / polish)
 
 - Swap in `SentenceTransformerEmbedder` to close the remaining semantic-gap
   failures at the root (documented in `eval/README.md`)
-- Simple frontend chat UI (Streamlit or minimal HTML) hitting the FastAPI backend
 - LLM-as-judge scoring once a real generation backend replaces the extractive stub
+
+## Frontend
+
+A single-file HTML/CSS/JS chat UI (no build step) — see
+**[`frontend/README.md`](frontend/README.md)** for design notes and how to
+run it. Shows each response's routing mode (tool / grounded answer / needs
+more info / support resources) alongside the answer and any cited sources,
+so it also works as a live demo of the agent's decision-making, not just a
+chat window.

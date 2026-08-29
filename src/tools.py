@@ -1,29 +1,10 @@
-"""
-tools.py
---------
-Deterministic, rule-based "tools" the agent can call. Important design
-constraint (carried over from the JD's responsible-AI angle): every tool
-here is a calculator or organizer, NOT a medical decision-maker. No tool
-diagnoses anything or recommends medication/supplements/dosages.
 
-Each tool is a plain Python function with:
-  - a clear name (used by the agent router to select it)
-  - a docstring description (shown to the LLM/agent as the tool's purpose)
-  - a JSON-schema-like `PARAMETERS` dict (so this maps cleanly onto a real
-    LLM function-calling schema later, e.g. Claude's tool-use API)
-  - a `run(**kwargs) -> dict` function that returns structured output
-
-TOOL_REGISTRY at the bottom is what agent.py iterates over to do routing.
-"""
 
 from __future__ import annotations
 from datetime import datetime, timedelta
 from typing import Dict, Any
 
 
-# ---------------------------------------------------------------------------
-# Tool 1: Bedtime / wake-time calculator (based on ~90 min sleep cycles)
-# ---------------------------------------------------------------------------
 
 def bedtime_calculator(wake_time: str, cycles: int = 5) -> Dict[str, Any]:
     """
@@ -71,9 +52,7 @@ BEDTIME_CALCULATOR_PARAMS = {
 }
 
 
-# ---------------------------------------------------------------------------
-# Tool 2: Caffeine cutoff calculator (based on sh-006)
-# ---------------------------------------------------------------------------
+
 
 def caffeine_cutoff_calculator(bedtime: str, sensitivity: str = "average") -> Dict[str, Any]:
     """
@@ -200,12 +179,7 @@ TOOL_REGISTRY = {
         "fn": bedtime_calculator,
         "description": bedtime_calculator.__doc__.strip().split("\n")[0],
         "parameters": BEDTIME_CALCULATOR_PARAMS,
-        # Regex patterns used by the intent router in agent.py. Kept
-        # specific on purpose -- generic single words like "bedtime"
-        # appear in almost every message here (every tool takes a
-        # bedtime), so using them as bare keywords causes false routing.
-        # See tests/test_agent.py for the regression cases that caught
-        # both the original tie-collision bug and this coverage gap.
+       
         "pattern_strings": [
             r"what time (should|do) i (go to bed|sleep)",
             r"wake up at",

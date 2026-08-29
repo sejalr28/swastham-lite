@@ -1,13 +1,3 @@
-"""
-ingest.py
----------
-End-to-end ingestion: knowledge/*.md -> chunks -> embeddings -> saved index.
-
-Run:
-    python ingest.py
-
-Produces data/index/{embeddings.npy, chunks.json, embedder.pkl}
-"""
 
 import os
 from chunking import load_and_chunk

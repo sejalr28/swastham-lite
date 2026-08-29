@@ -1,18 +1,3 @@
-"""
-llm.py
-------
-Pluggable LLM backend for answer generation.
-
-- StubLLM: no API key / no network required. Produces a grounded answer
-  by extracting and lightly stitching the retrieved chunk text. This is
-  what runs by default in this offline sandbox and in unit tests, so the
-  whole pipeline is verifiable without any external dependency.
-- ClaudeLLM: wraps the real Anthropic API for actual deployment. Requires
-  `pip install anthropic` and an ANTHROPIC_API_KEY environment variable.
-
-rag.py only depends on the .generate(query, context_chunks) interface,
-so switching backends is a one-line change (see get_default_llm()).
-"""
 
 from __future__ import annotations
 import os

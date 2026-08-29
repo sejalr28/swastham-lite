@@ -1,24 +1,9 @@
-"""
-test_agent.py
---------------
-Regression tests for the agent's tool-routing logic.
-
-Includes the exact collision case found during manual testing in week 2:
-a message mentioning "bedtime" (generic) alongside a caffeine/wind-down
-specific phrase was incorrectly routed to bedtime_calculator because of
-keyword-count ties. Fixed by scoring on matched-phrase length instead of
-hit count, plus removing overly generic keywords. These cases must never
-silently regress.
-"""
 
 import os
 import sys
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 
-from agent import Agent  # noqa: E402
-
-
-# (message, expected_mode, expected_tool_name_or_None)
+from agent import Agent  
 ROUTING_CASES = [
     ("What time should I go to bed if I need to wake up at 6:30am?", "tool", "bedtime_calculator"),
     ("When should I stop drinking coffee if my bedtime is 10:30pm?", "tool", "caffeine_cutoff_calculator"),
@@ -28,9 +13,7 @@ ROUTING_CASES = [
     ("How does caffeine affect sleep quality?", "rag", None),
     ("What are the stages of sleep?", "rag", None),
     ("I've been having thoughts of ending my life", "crisis", None),
-    # Ambiguous: two distinct times present -> must ask for clarification,
-    # not silently pick the wrong one (this is the bug found in dev testing:
-    # the coffee time 10:30pm was wrongly used as the bedtime).
+   
     ("Is 10:30pm too late for my last coffee if bedtime is midnight?", "clarify", "caffeine_cutoff_calculator"),
     ("My wake time is 6am, what sleep cycles work best?", "tool", "bedtime_calculator"),
 ]

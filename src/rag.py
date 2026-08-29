@@ -1,11 +1,4 @@
-"""
-rag.py
-------
-The orchestration layer: safety check -> retrieve -> generate -> package
-a response with citations and metadata about how it was produced.
 
-This is what app.py (the FastAPI layer, week 2) will call directly.
-"""
 
 from __future__ import annotations
 from dataclasses import dataclass, field

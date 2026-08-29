@@ -1,17 +1,3 @@
-"""
-chunking.py
------------
-Turns raw knowledge markdown files into small, metadata-tagged chunks
-suitable for embedding and retrieval.
-
-Design choices (documented for the eval/README):
-- Chunk by paragraph first, then merge small paragraphs up to a target
-  word count. This keeps chunks topically coherent (better grounding)
-  instead of using a naive fixed-character sliding window.
-- Every chunk carries provenance metadata (doc_id, title, topic,
-  last_reviewed, chunk_index) so answers can cite a specific source
-  and we can filter/inspect retrieval quality later.
-"""
 
 from __future__ import annotations
 import re
@@ -55,7 +41,7 @@ def _parse_frontmatter(raw: str) -> tuple[Dict[str, str], str]:
 
 
 def _split_paragraphs(body: str) -> List[str]:
-    # Drop markdown headings on their own line, keep paragraph text
+    
     paras = [p.strip() for p in re.split(r"\n\s*\n", body) if p.strip()]
     cleaned = []
     for p in paras:

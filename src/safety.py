@@ -1,21 +1,4 @@
-"""
-safety.py
----------
-Lightweight, rule-based safety layer that runs BEFORE retrieval/generation.
 
-This is intentionally simple (keyword/pattern based) for week 1. The JD
-explicitly calls out "responsible-AI, data-governance" requirements, so
-this module exists to show that safety is treated as a first-class part
-of the pipeline, not an afterthought. A production version would likely
-add a classifier model here in addition to rules.
-
-Two things this layer catches:
-1. Crisis signals (self-harm, medical emergency) -> bypass normal RAG
-   entirely and return a fixed, calm redirect to appropriate help.
-2. Diagnosis-seeking questions ("do I have insomnia?") -> RAG can still
-   run for general info, but the answer is tagged so the app can prepend
-   a "this isn't a diagnosis" reminder.
-"""
 
 from __future__ import annotations
 import re

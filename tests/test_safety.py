@@ -1,18 +1,10 @@
-"""
-test_safety.py
----------------
-Regression tests for the crisis/diagnosis detection layer.
 
-Includes the exact case that failed during manual testing in week 1
-("thoughts of ending my life") to make sure it never silently regresses.
-Run with: pytest tests/test_safety.py -v   (or: python tests/test_safety.py)
-"""
 
 import os
 import sys
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 
-import safety  # noqa: E402
+import safety 
 
 
 CRISIS_CASES = [
@@ -27,7 +19,7 @@ CRISIS_CASES = [
 NON_CRISIS_CASES = [
     "How does caffeine before bed affect my sleep?",
     "What temperature should my bedroom be?",
-    "I ended my workout late and now I can't sleep",  # 'end' present, not crisis
+    "I ended my workout late and now I can't sleep",  
     "My phone died so I couldn't use my sleep app",
 ]
 

@@ -1,21 +1,4 @@
-"""
-embeddings.py
--------------
-Pluggable embedding backend.
 
-Why this design:
-- The JD/eval environment for this project has no outbound network access,
-  so calling a hosted embedding API (OpenAI/Voyage) or downloading a
-  sentence-transformers model isn't possible here.
-- TfidfEmbedder (scikit-learn) is a fully local, dependency-light backend
-  that works today and gives a real, testable retrieval baseline.
-- SentenceTransformerEmbedder is provided as a drop-in swap for when this
-  runs somewhere with internet/model access (better semantic recall,
-  handles paraphrasing / synonyms that TF-IDF misses).
-
-Both implement the same tiny interface: fit(texts), embed(texts) -> np.ndarray
-so retriever.py doesn't need to know which one is active.
-"""
 
 from __future__ import annotations
 import re
@@ -26,12 +9,7 @@ from sklearn.feature_extraction.text import ENGLISH_STOP_WORDS
 
 _WORD_RE = re.compile(r"[a-zA-Z]+(?:'[a-zA-Z]+)?")
 
-# A handful of generic, low-signal evaluative/frequency words that are NOT
-# in sklearn's built-in English stopword list but showed up, during eval
-# (eval/run_eval.py), inflating similarity scores for genuinely off-topic
-# queries just because they're common filler in this knowledge base's
-# writing style (e.g. "good sleep hygiene practices", "a common approach").
-# See eval/README.md "Findings" for the specific cases this fixed.
+
 _EXTRA_STOPWORDS = {"good", "general", "generally", "common", "commonly"}
 
 
@@ -63,18 +41,9 @@ _EXTRA_STOPWORDS_STEMMED = {_simple_stem(w) for w in _EXTRA_STOPWORDS}
 
 
 def _stemmed_tokenizer(text: str) -> List[str]:
-    # Filter stopwords BEFORE stemming (not after) -- sklearn's built-in
-    # stop_words="english" list contains un-stemmed forms ("always",
-    # "anything"), so stemming first and filtering after would miss them
-    # (stemmed to "alway", "anyth", which aren't in the list). This was
-    # caught by a UserWarning sklearn raises when the two are inconsistent.
+    
     words = [w.lower() for w in _WORD_RE.findall(text)]
-    # Discard length-1 fragments (e.g. a naive word regex splitting
-    # "What's" into "what" + "s" creates a spurious high-frequency "s"
-    # token that matches plurals/possessives everywhere in the corpus --
-    # found via eval/run_eval.py showing "What's the capital of France?"
-    # scoring ABOVE the minimum legitimate correctness score once this
-    # tokenizer was first introduced, before this fix).
+    
     words = [w for w in words if len(w) >= 2]
     words = [w for w in words if w not in ENGLISH_STOP_WORDS]
     stemmed = [_simple_stem(w) for w in words]
@@ -136,7 +105,7 @@ class SentenceTransformerEmbedder:
         self.model = SentenceTransformer(model_name)
 
     def fit(self, texts: List[str]) -> None:
-        # No fitting needed for a pretrained model; kept for interface parity.
+       
         pass
 
     def embed(self, texts: List[str]) -> np.ndarray:
